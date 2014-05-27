@@ -34,5 +34,4 @@ class Model {
         return $this->error;
     }
 
-
 }

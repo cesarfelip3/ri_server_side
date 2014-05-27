@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS `appointment` (
   `person_uuid` varchar(255) NOT NULL DEFAULT '',
   `user_uuid` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '',
-  `description` varchar(255) NOT NULL DEFAULT ''
-  PRIMARY KEY (`state_id`)
+  `description` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`appointment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
@@ -24,8 +24,8 @@ CREATE TABLE IF NOT EXISTS `alert` (
   `person_uuid` varchar(255) NOT NULL DEFAULT '',
   `user_uuid` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '',
-  `description` varchar(255) NOT NULL DEFAULT ''
-  PRIMARY KEY (`state_id`)
+  `description` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`alert_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -72,7 +72,3 @@ CREATE TABLE IF NOT EXISTS `user` (
   `modified_date` int(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

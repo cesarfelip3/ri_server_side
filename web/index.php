@@ -133,10 +133,10 @@ $api->post("user/add", function (Request $request) use ($app) {
     return $app->json($controller->getError(), $status);
 });
 
-$api->post("user/image/latest", function (Request $request) use ($app) {
+$api->post("person/add", function (Request $request) use ($app) {
 
-    $controller = new Controller\ImageController($request, $app);
-    $ret = $controller->getLatestByUser();
+    $controller = new Controller\PersonController($request, $app);
+    $ret = $controller->addPerson();
 
     $status = 200;
     if ($ret) {
@@ -149,25 +149,10 @@ $api->post("user/image/latest", function (Request $request) use ($app) {
 });
 
 // image / upload
-$api->post("image/upload", function (Request $request) use ($app) {
+$api->post("alert/add", function (Request $request) use ($app) {
 
-    $controller = new Controller\ImageController($request, $app);
-    $ret = $controller->upload($app["upload.folder.image"]);
-
-    $status = 200;
-    if ($ret) {
-        $status = 200;
-    } else {
-        $status = 400;
-    }
-
-    return $app->json($controller->getError(), $status);
-});
-
-$api->post("image/update", function (Request $request) use ($app) {
-
-    $controller = new Controller\ImageController($request, $app);
-    $ret = $controller->updateInfo();
+    $controller = new Controller\AlertController($request, $app);
+    $ret = $controller->addAlert();
 
     $status = 200;
     if ($ret) {
@@ -179,10 +164,10 @@ $api->post("image/update", function (Request $request) use ($app) {
     return $app->json($controller->getError(), $status);
 });
 
-$api->post("image/latest", function (Request $request) use ($app) {
+$api->post("appointment/add", function (Request $request) use ($app) {
 
-    $controller = new Controller\ImageController($request, $app);
-    $ret = $controller->getLatest();
+    $controller = new Controller\AppointController($request, $app);
+    $ret = $controller->addAppointment();
 
     $status = 200;
     if ($ret) {

@@ -1,0 +1,18 @@
+Development
+=============
+
+
+1. REST API
+2. Admin web panel ==> manage ......
+
+
+REST API
+=============
+
+http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/security.html
+@todo: secuirty of doctrine DQL
+
+// http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/data-retrieval-and-manipulation.html#insert
+// http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/query-builder.html
+// http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/transactions.html
+// http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/security.html

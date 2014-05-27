@@ -1,0 +1,9 @@
+
+<IfModule mod_rewrite.c>
+    Options -MultiViews
+
+    RewriteEngine On
+    RewriteBase /gajeweb
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ web/index.php [QSA,L]
+</IfModule>

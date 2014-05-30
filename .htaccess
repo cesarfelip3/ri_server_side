@@ -3,7 +3,7 @@
     Options -MultiViews
 
     RewriteEngine On
-    RewriteBase /gajeweb
+    RewriteBase /riweb
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ web/index.php [QSA,L]
 </IfModule>

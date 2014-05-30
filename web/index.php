@@ -116,7 +116,8 @@ $api->post("auth", function (Request $request) use ($app) {
 
 });
 
-// tested
+// we will save token here for each device
+// 
 
 $api->post("user/add", function (Request $request) use ($app) {
 
@@ -132,22 +133,6 @@ $api->post("user/add", function (Request $request) use ($app) {
 
     return $app->json($controller->getError(), $status);
 });
-
-$api->post("person/add", function (Request $request) use ($app) {
-
-    $controller = new Controller\PersonController($request, $app);
-    $ret = $controller->addPerson();
-
-    $status = 200;
-    if ($ret) {
-        $status = 200;
-    } else {
-        $status = 400;
-    }
-
-    return $app->json($controller->getError(), $status);
-});
-
 
 // image / upload
 $api->post("alert/add", function (Request $request) use ($app) {
@@ -195,7 +180,7 @@ $app->mount($basename . "/" . $api_v1, $api);
 
 $test = $app["controllers_factory"];
 
-$test->get("user/add", function () use ($app) {
+$test->get("user/add", function () use ($app, $basename, $api_v1) {
 
     $file_name_with_full_path = realpath(__DIR__ . "/pi-512.png");
     $post = array(
@@ -203,63 +188,11 @@ $test->get("user/add", function () use ($app) {
         'token' => 'bbad2323adfadsf'
     );
 
-    $target_url = "http://localhost/gajeweb/api/v1/user/add";
-
+    $target_url = "http://localhost" . $basename . "/" . $api_v1 . "user/add";
     require_once __DIR__ . '/test/Curl.class.php';
 
     $curl = new Curl();
 
-
-    $curl->post($target_url, $post);
-    print_r (json_encode($curl->response));
-
-    exit;
-});
-
-$test->get("image/upload/{userId}", function ($userId) use ($app) {
-
-    $file_name_with_full_path = realpath(__DIR__ . "/pi-512.png");
-    $post = array('user_uuid' => $userId, 'fileinfo' => '@' . $file_name_with_full_path);
-
-    $target_url = "http://localhost/gajeweb/api/v1/image/upload";
-
-    require_once __DIR__ . '/test/Curl.class.php';
-
-    $curl = new Curl();
-
-    $curl->post($target_url, $post);
-    print_r (json_encode($curl->response));
-
-    exit;
-});
-
-
-$test->get("user/image/latest/{userId}", function ($userId) use ($app) {
-
-    $file_name_with_full_path = realpath(__DIR__ . "/pi-512.png");
-    $post = array('page' => 0, 'page_size' => 50, 'user_uuid' => $userId);
-
-    $target_url = "http://localhost/gajeweb/api/v1/user/image/latest";
-
-    require_once __DIR__ . '/test/Curl.class.php';
-
-    $curl = new Curl();
-
-    $curl->post($target_url, $post);
-    print_r (json_encode($curl->response));
-
-    exit;
-});
-
-$test->get("image/latest", function () use ($app) {
-
-    $post = array('page' => 0, 'page_size' => 50);
-
-    $target_url = "http://localhost/gajeweb/api/v1/image/latest";
-
-    require_once __DIR__ . '/test/Curl.class.php';
-
-    $curl = new Curl();
 
     $curl->post($target_url, $post);
     print_r (json_encode($curl->response));

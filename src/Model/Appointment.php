@@ -18,4 +18,14 @@ class Appointment extends Model
     {
         return "appointment";
     }
+
+    public function addAppoint ()
+    {
+        $data["alert_uuid"] = uniqid();
+        $data["create_date"] = time ();
+
+        $this->db->insert($this->table, $data);
+
+        return true;
+    }
 }

@@ -18,4 +18,15 @@ class Alert extends Model
     {
         return "alert";
     }
+
+    public function addAlert ()
+    {
+
+        $data["alert_uuid"] = uniqid();
+        $data["create_date"] = time ();
+
+        $this->db->insert($this->table, $data);
+
+        return true;
+    }
 }

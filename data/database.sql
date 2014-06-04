@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `alert` (
   `user_uuid` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '',
   `time` int(11) NOT NULL DEFAULT '0',
+  `time_arrived` int(11) NOT NULL DEFAULT '0',
   `description` varchar(255) NOT NULL DEFAULT '',
   `create_date` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`alert_id`)
@@ -53,6 +54,7 @@ CREATE TABLE IF NOT EXISTS `appointment` (
   `user_uuid` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '',
   `time` int(11) NOT NULL DEFAULT '0',
+  `time_arrived` int(11) NOT NULL DEFAULT '0',
   `description` varchar(255) NOT NULL DEFAULT '',
   `create_date` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`appointment_id`)

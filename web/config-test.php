@@ -10,7 +10,7 @@ $config["db"] = array (
         "port" => "3306",
         "user" => "root",
         "password" => "",
-        "dbname" => "gajeapp",
+        "dbname" => "riapp",
         // "charset" => "",
     )
 );

@@ -122,7 +122,7 @@ $api->post("auth", function (Request $request) use ($app) {
 $api->post("user/add", function (Request $request) use ($app) {
 
     $controller = new Controller\UserController($request, $app);
-    $ret = $controller->addUser();
+    $ret = $controller->addUser($app['upload.folder']);
 
     $status = 200;
     if ($ret) {
@@ -185,14 +185,14 @@ $test->get("user/add", function () use ($app, $basename, $api_v1) {
     $file_name_with_full_path = realpath(__DIR__ . "/pi-512.png");
     $post = array(
         'email' => '123456@abc.com',
-        'token' => 'bbad2323adfadsf'
+        'token' => 'bbad2323adfadsf',
+        'fileinfo' => '@' . $file_name_with_full_path
     );
 
     $target_url = "http://localhost" . $basename . "/" . $api_v1 . "user/add";
     require_once __DIR__ . '/test/Curl.class.php';
 
     $curl = new Curl();
-
 
     $curl->post($target_url, $post);
     print_r (json_encode($curl->response));

@@ -21,7 +21,7 @@ class UserController extends BaseController
         $this->response = new Response();
     }
 
-    public function addUser()
+    public function addUser($uploadFolder)
     {
 
         $email = $this->request->get("email", "");

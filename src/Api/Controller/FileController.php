@@ -11,7 +11,7 @@ use Api\Controller\BaseController;
 use Model\Image;
 use Model\User;
 
-class ImageController extends BaseController {
+class FileController extends BaseController {
 
     public function __construct ($request, $app)
     {

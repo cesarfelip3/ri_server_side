@@ -81,6 +81,28 @@ CREATE TABLE IF NOT EXISTS `person` (
 
 -- --------------------------------------------------------
 
+DROP TABLE IF EXISTS `file`;
+CREATE TABLE IF NOT EXISTS `file` (
+  `file_id` int(20) NOT NULL AUTO_INCREMENT,
+  `file_uuid` varchar(255) NOT NULL DEFAULT '',
+  `user_uuid` varchar(255) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `description` varchar(512) NOT NULL DEFAULT '',
+  `mime` varchar(255) NOT NULL DEFAULT '',
+  `type` varchar(32) NOT NULL DEFAULT '',
+  `status` varchar(32) NOT NULL DEFAULT '',
+  `approved` int(11) NOT NULL DEFAULT '0',
+  `thumbnails` int(11) NOT NULL DEFAULT '0',
+  `width` int(11) NOT NULL DEFAULT '0',
+  `height` int(11) NOT NULL DEFAULT '0',
+  `file_name` varchar(255) NOT NULL DEFAULT '',
+  `file_path` varchar(255) NOT NULL DEFAULT '',
+  `sort_order` int(11) NOT NULL DEFAULT '0',
+  `create_date` int(11) NOT NULL DEFAULT '0',
+  `modified_date` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`file_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 --
 -- Table structure for table `user`
 --

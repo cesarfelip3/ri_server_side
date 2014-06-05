@@ -49,6 +49,17 @@ class User extends Model
         return $uuid;
     }
 
+    public function userExistsByEmail($email)
+    {
+        $uuid = $this->db->fetchColumn("SELECT user_uuid FROM {$this->table} WHERE `email`=?", array($email));
+
+        if (empty ($uuid)) {
+            return false;
+        }
+
+        return $uuid;
+    }
+
     public function userExists($userId)
     {
         $uuid = $this->db->fetchColumn("SELECT user_uuid FROM {$this->table} WHERE user_uuid=?", array($userId));

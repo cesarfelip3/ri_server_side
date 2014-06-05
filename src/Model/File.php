@@ -41,7 +41,7 @@ class File extends Model {
 
     public function deleteFilesByUser ($userId)
     {
-        $result = $this->db->fetchColumn("SELECT file_path, file_name FROM {$this->table} WHERE user_uuid=?", array ($userId));
+        $result = $this->db->fetchAll("SELECT file_path, file_name FROM {$this->table} WHERE user_uuid=?", array ($userId));
 
         if ($result) {
 

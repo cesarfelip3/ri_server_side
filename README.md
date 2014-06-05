@@ -6,14 +6,14 @@ development
 
 here *server* refer to "push notification server"
 
-// Sprint A
+@todo: === Sprint A ===
 // Saving user infomation and push notification dev token for the user
 
 1. when user logged, the app will send "username, email" and dev_token file to server
 2. server will save user to db if it doesn't exist, and save dev_token file to server
 3. server will get user uuid if it does exist, and remove the previous dev_token, save the new dev_token
 
-// Sprint B
+@todo: === Sprint B ===
 // Saving alert from user
 // Send notification to app
 
@@ -25,12 +25,12 @@ here *server* refer to "push notification server"
     current time = time () - latency
     current time >= alert time ==> send the notification to user
 
-// Sprint C
+@todo: === Sprint C ===
 // Saving appointment from user
 // Send notification to app
 
 
-// Spring D
+@todo: === Spring D ===
 // Send notification
 
 1. cron job ==> query ==> send

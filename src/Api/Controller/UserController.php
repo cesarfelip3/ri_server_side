@@ -9,6 +9,7 @@ use Api\Controller\BaseController;
 use Model\User;
 use Model\Alert;
 use Model\Appointment;
+use Model\File;
 
 class UserController extends BaseController
 {
@@ -77,6 +78,7 @@ class UserController extends BaseController
                 } else {
 
                     $file = new File();
+                    $file->deleteFilesByUser($user_uuid);
                     $file_uuid = $file->addFile($data);
 
                     if (empty ($file_uuid)) {

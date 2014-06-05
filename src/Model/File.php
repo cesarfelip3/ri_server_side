@@ -36,7 +36,12 @@ class File extends Model {
 
     public function deleteFile ($fileId)
     {
-        $this->db->delete($this->table, array('token' => $data["token"]));
+
+    }
+
+    public function deleteFilesByUser ($userId)
+    {
+        $this->db->delete($this->table, array('user_uuid' => $userId));
     }
 
     public function fileExists ($fileId)

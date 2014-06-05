@@ -47,4 +47,9 @@ class BaseController {
 
         return json_encode($output);
     }
+
+    public function getUUId ()
+    {
+
+    }
 }

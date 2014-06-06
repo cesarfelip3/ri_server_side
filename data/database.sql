@@ -112,6 +112,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_uuid` varchar(255) NOT NULL DEFAULT '',
   `token` varchar(255) NOT NULL DEFAULT '',
+  `dev_token_base64` varchar(512) NOT NULL DEFAULT '',
   `username` varchar(32) NOT NULL DEFAULT '',
   `email` varchar(255) NOT NULL DEFAULT '',
   `password` varchar(255) NOT NULL DEFAULT '',

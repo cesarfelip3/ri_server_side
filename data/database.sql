@@ -33,8 +33,9 @@ CREATE TABLE IF NOT EXISTS `alert` (
   `person_uuid` varchar(255) NOT NULL DEFAULT '',
   `user_uuid` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '',
-  `time` int(11) NOT NULL DEFAULT '0',
-  `time_arrived` int(11) NOT NULL DEFAULT '0',
+  `alarm` int(11) NOT NULL DEFAULT '0',
+  `latency_start` int(11) NOT NULL DEFAULT '0',
+  `latency_end` int(11) NOT NULL DEFAULT '0',
   `description` varchar(255) NOT NULL DEFAULT '',
   `create_date` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`alert_id`)
@@ -53,8 +54,9 @@ CREATE TABLE IF NOT EXISTS `appointment` (
   `person_uuid` varchar(255) NOT NULL DEFAULT '',
   `user_uuid` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '',
-  `time` int(11) NOT NULL DEFAULT '0',
-  `time_arrived` int(11) NOT NULL DEFAULT '0',
+  `alarm` int(11) NOT NULL DEFAULT '0',
+  `latency_start` int(11) NOT NULL DEFAULT '0',
+  `latency_end` int(11) NOT NULL DEFAULT '0',
   `description` varchar(255) NOT NULL DEFAULT '',
   `create_date` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`appointment_id`)

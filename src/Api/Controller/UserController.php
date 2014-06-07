@@ -82,7 +82,6 @@ class UserController extends BaseController
             return $this->setFailed("We won't be able to send you remote notification as your alarm is too short to do in current network latency");
         }
 
-
         $data["user_uuid"] = $user_uuid;
         $data["name"] = $name;
         $data["description"] = $description;

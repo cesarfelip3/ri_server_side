@@ -26,10 +26,12 @@ class UserController extends BaseController
 
         $email = $this->request->get("email", "");
         $username = $this->request->get("username", "");
+        $dev_token = $this->request->get("dev_token", "");
 
         $data = array(
             "email" => $email,
-            "username" => $username
+            "username" => $username,
+            "dev_token" => $dev_token
         );
 
         if (empty ($email)) {
@@ -49,53 +51,12 @@ class UserController extends BaseController
             }
 
             $userId = $uuid;
+        } else {
+
+
         }
 
         $user_uuid = $userId;
-        $file = $this->request->files->get("fileinfo");
-
-        if (empty ($file)) {
-            return $this->setFailed("file handler not exist");
-        }
-
-        if ($file->isValid()) {
-
-            $data = array ();
-            $data["mime"] = $file->getMimeType();
-
-            $data["file_name"] = "dev_token_" . uniqid();
-            $data["file_path"] = $uploadFolder;
-            $data["user_uuid"] = $user_uuid;
-
-            $data['name'] = $this->request->get("name", "Untitle");
-            $data['description'] = $this->request->get("description", "Untitle file");
-
-
-            if (file_exists($data["file_path"])) {
-
-                if (false == $file->move ($data["file_path"], $data["file_name"])) {
-                    return $this->setFailed("move file error");
-                } else {
-
-                    $file = new File();
-                    $file->deleteFilesByUser($user_uuid);
-                    $file_uuid = $file->addFile($data);
-
-                    if (empty ($file_uuid)) {
-
-                        return $this->setFailed("save file to db error");
-                    }
-                }
-
-            } else {
-                return $this->setFailed("upload folder not exist");
-            }
-        } else {
-
-            // basically php.ini issue
-
-            return $this->setFailed("invalid upload", array("result"=>$file));
-        }
 
         $this->setSuccess("", array ("user_uuid"=>$user_uuid));
         return true;

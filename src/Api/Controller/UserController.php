@@ -53,7 +53,8 @@ class UserController extends BaseController
             $userId = $uuid;
         } else {
 
-
+            $data['user_uuid'] = $uuid;
+            $user->updateUser($data);
         }
 
         $user_uuid = $userId;

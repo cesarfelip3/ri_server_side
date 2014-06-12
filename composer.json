@@ -21,9 +21,7 @@
         "symfony/event-dispatcher": ">=2.3,<2.6-dev",
         "symfony/http-foundation": ">=2.3,<2.6-dev",
         "symfony/http-kernel": ">=2.3,<2.6-dev",
-        "symfony/routing": ">=2.3,<2.6-dev",
-        "richsage/rms-push-notifications-bundle": "dev-master",
-        "sly/notification-pusher": "2.x"
+        "symfony/routing": ">=2.3,<2.6-dev"
     },
     "require-dev": {
         "symfony/security": ">=2.3,<2.6-dev",
@@ -47,7 +45,9 @@
         "swiftmailer/swiftmailer": "5.*",
         "monolog/monolog": "~1.4,>=1.4.1",
         "phpunit/phpunit": "~3.7",
-	    "imagine/imagine": "~0.5.0"
+	    "imagine/imagine": "~0.5.0",
+        "richsage/rms-push-notifications-bundle": "dev-master",
+        "sly/notification-pusher": "2.x"
     },
     "suggest": {
         "symfony/browser-kit": ">=2.3,<2.6-dev",

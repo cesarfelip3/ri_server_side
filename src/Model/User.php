@@ -33,6 +33,7 @@ class User extends Model
         $user_uuid = $data["user_uuid"];
         unset ($data["user_uuid"]);
         $data["modified_date"] = time();
+        $data["dev_token"] = $this->convertToken($data["dev_token"]);
         $this->db->update($this->table, $data, array('user_uuid' => $user_uuid));
     }
 

@@ -136,10 +136,10 @@ $api->post("user/add", function (Request $request) use ($app) {
 });
 
 // image / upload
-$api->post("alert/add", function (Request $request) use ($app) {
+$api->post("todo/add", function (Request $request) use ($app) {
 
-    $controller = new Controller\AlertController($request, $app);
-    $ret = $controller->addAlert();
+    $controller = new Controller\UserController($request, $app);
+    $ret = $controller->addTodo();
 
     $status = 200;
     if ($ret) {
@@ -153,7 +153,7 @@ $api->post("alert/add", function (Request $request) use ($app) {
 
 $api->post("appointment/add", function (Request $request) use ($app) {
 
-    $controller = new Controller\AppointController($request, $app);
+    $controller = new Controller\UserController($request, $app);
     $ret = $controller->addAppointment();
 
     $status = 200;

@@ -7,9 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Api\Controller\BaseController;
 
 use Model\User;
-use Model\Alert;
+use Model\Todo;
 use Model\Appointment;
-use Model\File;
 
 class UserController extends BaseController
 {
@@ -63,7 +62,7 @@ class UserController extends BaseController
         return true;
     }
 
-    public function addAlert ()
+    public function addTodo ()
     {
         $user_uuid = $this->request->get("user_uuid", "");
         $name = $this->request->get("name", "");
@@ -79,7 +78,7 @@ class UserController extends BaseController
 
         if ($latency_end - $alarm - ($latency_end - $latency_start) * 2 <= 0) {
 
-            return $this->setFailed("We won't be able to send you remote notification as your alarm is too short to do in current network latency");
+            return $this->setFailed("We are not able to send you remote notification");
         }
 
         $data["user_uuid"] = $user_uuid;
@@ -94,11 +93,11 @@ class UserController extends BaseController
         $user_uuid = $user->userExists($user_uuid);
 
         if (!$user_uuid) {
-            return $this->setFailed("There is no user with current id <$user_uuid>");
+            return $this->setFailed("There is no user with current id#$user_uuid");
         }
 
-        $alert = new Alert();
-        if ($alert->addAlert($data)) {
+        $todo = new Todo();
+        if ($todo->addTodo($data)) {
 
         } else {
             return $this->setFailed("Wrong db operation");

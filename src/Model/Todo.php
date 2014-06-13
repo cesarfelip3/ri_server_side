@@ -19,7 +19,7 @@ class Todo extends Model
         return "todo";
     }
 
-    public function addTodo ()
+    public function addTodo ($data)
     {
 
         $data["todo_uuid"] = uniqid();

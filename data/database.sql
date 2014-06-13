@@ -26,10 +26,10 @@ SET time_zone = "+00:00";
 -- Table structure for table `alert`
 --
 
-DROP TABLE IF EXISTS `alert`;
-CREATE TABLE IF NOT EXISTS `alert` (
-  `alert_id` int(11) NOT NULL AUTO_INCREMENT,
-  `alert_uuid` varchar(255) NOT NULL DEFAULT '',
+DROP TABLE IF EXISTS `todo`;
+CREATE TABLE IF NOT EXISTS `todo` (
+  `todo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `todo_uuid` varchar(255) NOT NULL DEFAULT '',
   `person_uuid` varchar(255) NOT NULL DEFAULT '',
   `user_uuid` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '',
@@ -37,8 +37,9 @@ CREATE TABLE IF NOT EXISTS `alert` (
   `latency_start` int(11) NOT NULL DEFAULT '0',
   `latency_end` int(11) NOT NULL DEFAULT '0',
   `description` varchar(255) NOT NULL DEFAULT '',
+  `status` int(11) NOT NULL DEFAULT '0',
   `create_date` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`alert_id`)
+  PRIMARY KEY (`todo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -58,6 +59,7 @@ CREATE TABLE IF NOT EXISTS `appointment` (
   `latency_start` int(11) NOT NULL DEFAULT '0',
   `latency_end` int(11) NOT NULL DEFAULT '0',
   `description` varchar(255) NOT NULL DEFAULT '',
+  `status` int(11) NOT NULL DEFAULT '0',
   `create_date` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`appointment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

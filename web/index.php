@@ -61,6 +61,7 @@ if (strtolower(substr($os, 0, 3)) == "dar") {
 // define global value for app
 
 $app["debug"] = $config["debug"];
+$app["certificates.folder"] = $config["certificates.folder"];
 $app['upload.image.host'] = $config["upload.image.host"];
 $app['upload.folder'] = $config["upload.folder"];
 $app['upload.folder.image'] = $config["upload.folder.image"];
@@ -165,6 +166,21 @@ $api->post("appointment/add", function (Request $request) use ($app) {
     return $app->json($controller->getError(), $status);
 });
 
+$api->get("push/apns", function (Request $request) use ($app) {
+
+    $controller = new Controller\PushController($request, $app);
+    $ret = $controller->push ($app["certificates.folder"]);
+
+    $status = 200;
+    if ($ret) {
+        $status = 200;
+    } else {
+        $status = 400;
+    }
+
+    return $app->json($controller->getError(), $status);
+});
+
 $api->before(function (Request $request) {
 
     return null;
@@ -196,6 +212,28 @@ $test->get("user/add", function () use ($app, $basename, $api_v1) {
 
     $curl->post($target_url, $post);
     print_r (json_encode($curl->response));
+
+    exit;
+});
+
+$test->get("push", function () use ($app, $basename, $api_v1) {
+
+    $file_name_with_full_path = realpath(__DIR__ . "/pi-512.png");
+    $post = array(
+        'email' => '123456@abc.com',
+        'token' => 'bbad2323adfadsf',
+        'fileinfo' => '@' . $file_name_with_full_path
+    );
+
+    $target_url = "http://localhost" . $basename . "/" . $api_v1 . "push/apns";
+    require_once __DIR__ . '/test/Curl.class.php';
+
+    $curl = new Curl();
+
+    $curl->get($target_url);
+
+    print_r ($curl->response);
+    //print_r (json_encode($curl->response));
 
     exit;
 });

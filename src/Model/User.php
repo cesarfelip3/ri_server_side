@@ -3,6 +3,8 @@
 namespace Model;
 
 use \Model\Model;
+use \Modal\Todo;
+use \Modal\Appointment;
 
 class User extends Model
 {
@@ -69,6 +71,61 @@ class User extends Model
         }
 
         return $uuid;
+    }
+
+    public function getAllNotification ()
+    {
+
+        $table_appoint = Appointment::table();
+        $table_todo = Todo::table();
+        $table_user = User::table();
+
+        $result_todo = $this->db->fetchAll ("SELECT * FROM $table_todo INNER JOIN $table_user ON $table_todo WHERE status=?", array (1));
+
+        foreach ($result_todo as $key => $todo) {
+
+            $user_uuid = $todo["user_uuid"];
+            $token = $this->getDevTokenByUUID($user_uuid);
+
+            if (empty ($token)) {
+                $this->setFailed("Invalid empty dev token for user#$user_uuid");
+                return false;
+            }
+
+            $todo["dev_token"] = $this->convertToken($token);
+            $result_todo[$key] = $todo;
+        }
+
+        //$result_appoint = $this->db->fetchAll ("SELECT * FROM $table_appoint WHERE status=?", array (1));
+
+        return $result;
+
+    }
+
+    public function getDevTokenByUUID ($user_uuid)
+    {
+        $token = $this->db->fetchColumn("SELECT dev_token FROM {$this->table} WHERE `user_uuid`=?", array($user_uuid));
+
+        if (empty ($token)) {
+            return false;
+        }
+
+        return $token;
+    }
+
+    public function convertToken ($token)
+    {
+
+        $token_segment_array = explode("_", $token);
+        $dev_token = "";
+
+        foreach ($token_segment_array as $segment) {
+
+            $dev_token .= dechex(intval($segment));
+        }
+
+        return $dev_token;
+
     }
 
     public static function table()

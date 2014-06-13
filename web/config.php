@@ -31,6 +31,7 @@ $config["router_test"] = "testcase/";
 // upload
 
 $config["debug"] = false;
+$config["certificates.folder"] = __DIR__ . DIRECTORY_SEPARATOR . "certificates" . DIRECTORY_SEPARATOR;
 $config['upload.image.host'] = 'http://localhost/image/';
 $config['upload.folder'] = realpath(__DIR__ . "/../../upload/") . DIRECTORY_SEPARATOR;
 $config['upload.folder.image'] = $config["upload.folder"] . "image" . DIRECTORY_SEPARATOR;

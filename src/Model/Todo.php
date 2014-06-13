@@ -4,10 +4,10 @@ namespace Model;
 
 use \Model\Model;
 
-class Alert extends Model
+class Todo extends Model
 {
 
-    public $table = "alert";
+    public $table = "todo";
 
     public function __construct()
     {
@@ -16,13 +16,13 @@ class Alert extends Model
 
     public static function table()
     {
-        return "alert";
+        return "todo";
     }
 
-    public function addAlert ()
+    public function addTodo ()
     {
 
-        $data["alert_uuid"] = uniqid();
+        $data["todo_uuid"] = uniqid();
         $data["create_date"] = time ();
 
         $this->db->insert($this->table, $data);

@@ -21,7 +21,7 @@ class Appointment extends Model
 
     public function addAppoint ()
     {
-        $data["alert_uuid"] = uniqid();
+        $data["appointment_uuid"] = uniqid();
         $data["create_date"] = time ();
 
         $this->db->insert($this->table, $data);

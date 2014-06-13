@@ -3,8 +3,8 @@
 namespace Model;
 
 use \Model\Model;
-use \Modal\Todo;
-use \Modal\Appointment;
+use \Model\Todo;
+use \Model\Appointment;
 
 class User extends Model
 {
@@ -75,14 +75,23 @@ class User extends Model
         return $uuid;
     }
 
-    public function getAllNotification ()
+    public function getAllNotification ($data)
     {
+
+        $page = $data["page"];
+        $pageSize = $data["page_size"];
+
+        $page = intval($page);
+        $pageSize = intval($pageSize);
+        $page = $page * $pageSize;
+
+        $limit = "$page, $pageSize";
 
         $table_appoint = Appointment::table();
         $table_todo = Todo::table();
         $table_user = User::table();
 
-        $result_todo = $this->db->fetchAll ("SELECT * FROM $table_todo INNER JOIN $table_user ON $table_todo WHERE status=?", array (1));
+        $result_todo = $this->db->fetchAll ("SELECT * FROM $table_todo WHERE status=? LIMIT {$limit}", array (0));
 
         foreach ($result_todo as $key => $todo) {
 
@@ -94,11 +103,13 @@ class User extends Model
                 return false;
             }
 
-            $todo["dev_token"] = $this->convertToken($token);
+            $todo["dev_token"] = $token;
             $result_todo[$key] = $todo;
         }
 
         //$result_appoint = $this->db->fetchAll ("SELECT * FROM $table_appoint WHERE status=?", array (1));
+
+        $result = array_merge($result_todo);
 
         return $result;
 

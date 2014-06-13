@@ -169,7 +169,7 @@ $api->post("appointment/add", function (Request $request) use ($app) {
 $api->get("push/apns", function (Request $request) use ($app) {
 
     $controller = new Controller\PushController($request, $app);
-    $ret = $controller->push ($app["certificates.folder"]);
+    $ret = $controller->push ($app["certificates.folder"] . "ri_dev_pns.pem");
 
     $status = 200;
     if ($ret) {

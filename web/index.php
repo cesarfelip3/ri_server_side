@@ -229,6 +229,10 @@ $test->get("todo/add", function () use ($app, $basename, $api_v1) {
         "latency_start" => time()
     );
 
+    if ($app["debug"] == false) {
+        $post["user_uuid"] = "539b8446214f9";
+    }
+
     $target_url = "http://localhost" . $basename . "/" . $api_v1 . "todo/add";
     require_once __DIR__ . '/test/Curl.class.php';
 

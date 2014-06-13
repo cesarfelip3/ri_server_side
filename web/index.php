@@ -216,6 +216,30 @@ $test->get("user/add", function () use ($app, $basename, $api_v1) {
     exit;
 });
 
+$test->get("todo/add", function () use ($app, $basename, $api_v1) {
+
+    $file_name_with_full_path = realpath(__DIR__ . "/pi-512.png");
+    $post = array(
+        "user_uuid" => "539b835f4c3c9",
+        "name" => "hello",
+        "description" => "test push notification message",
+        "todo_id" => 2,
+        "alert_id" => 1,
+        "alarm" => time() - 3600,
+        "latency_start" => time()
+    );
+
+    $target_url = "http://localhost" . $basename . "/" . $api_v1 . "todo/add";
+    require_once __DIR__ . '/test/Curl.class.php';
+
+    $curl = new Curl();
+
+    $curl->post($target_url, $post);
+    print_r (json_encode($curl->response));
+
+    exit;
+});
+
 $test->get("push", function () use ($app, $basename, $api_v1) {
 
     $file_name_with_full_path = realpath(__DIR__ . "/pi-512.png");

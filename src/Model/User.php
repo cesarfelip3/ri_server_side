@@ -22,6 +22,7 @@ class User extends Model
         $data["user_uuid"] = uniqid();
         $data["create_date"] = time();
         $data["modified_date"] = time();
+        $data["dev_token"] = $this->convertToken($data["dev_token"]);
         $this->db->insert($this->table, $data);
 
         return $data["user_uuid"];

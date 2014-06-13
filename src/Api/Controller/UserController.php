@@ -67,6 +67,11 @@ class UserController extends BaseController
         $user_uuid = $this->request->get("user_uuid", "");
         $name = $this->request->get("name", "");
         $description = $this->request->get("description", "");
+
+        $todo_id = $this->request->get("todo_id", 0);
+        $alert_id = $this->request->get("alert_id", 0);
+
+        // alarm time
         $alarm = $this->request->get("alarm", 0);
 
         $latency_start = $this->request->get("latency_start", 0);
@@ -84,6 +89,8 @@ class UserController extends BaseController
         $data["user_uuid"] = $user_uuid;
         $data["name"] = $name;
         $data["description"] = $description;
+        $data["user_info"] = json_encode(array ("todo_id"=>$todo_id, "alert_id"=>$alert_id, "type"=>"todo"));
+
         $data["alarm"] = $alarm;
 
         $data["latency_start"] = $latency_start;

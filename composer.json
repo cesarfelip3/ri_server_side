@@ -45,7 +45,7 @@
         "swiftmailer/swiftmailer": "5.*",
         "monolog/monolog": "~1.4,>=1.4.1",
         "phpunit/phpunit": "~3.7",
-"sly/notification-pusher": "2.x"
+        "sly/notification-pusher": "2.x"
     },
     "suggest": {
         "symfony/browser-kit": ">=2.3,<2.6-dev",

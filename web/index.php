@@ -166,6 +166,24 @@ $api->post("appointment/add", function (Request $request) use ($app) {
     return $app->json($controller->getError(), $status);
 });
 
+$api->post("push/enable", function (Request $request) use ($app) {
+
+    $controller = new Controller\UserController($request, $app);
+    $ret = $controller->switchPushNotification();
+
+    $status = 200;
+    if ($ret) {
+        $status = 200;
+    } else {
+        $status = 400;
+    }
+
+    return $app->json($controller->getError(), $status);
+});
+
+// this will be called from cron job
+//
+
 $api->post("push/apns", function (Request $request) use ($app) {
 
     $controller = new Controller\PushController($request, $app);

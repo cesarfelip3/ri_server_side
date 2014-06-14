@@ -30,4 +30,28 @@ class Todo extends Model
 
         return true;
     }
+
+    public function updateTodo ($data)
+    {
+
+        $todo_uuid = $data["todo_uuid"];
+        unset ($data["todo_uuid"]);
+
+        $data["description"] = $this->db->quote ($data["description"]);
+        $data["description"] = trim ($data["description"], "'");
+        $this->db->update($this->table, array ("todo_uuid" => $todo_uuid));
+
+        return true;
+    }
+
+    public function todoExists($data)
+    {
+        $uuid = $this->db->fetchColumn("SELECT todo_uuid FROM {$this->table} WHERE user_info=? AND user_uuid=?", array($data["user_info"]), $data["user_uuid"]);
+
+        if (empty ($uuid)) {
+            return false;
+        }
+
+        return $uuid;
+    }
 }

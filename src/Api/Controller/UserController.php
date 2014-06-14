@@ -27,7 +27,7 @@ class UserController extends BaseController
     // when the user login, the push notification is disabled
     // only if the user is available, then it's enabled
 
-    public function switchPushNotification ()
+    public function switchPushNotification()
     {
 
         $user_uuid = $this->request->get("user_uuid", "");
@@ -44,6 +44,8 @@ class UserController extends BaseController
         }
 
         $user->updateUser($data);
+
+        return $this->setSuccess("");
 
     }
 
@@ -90,13 +92,13 @@ class UserController extends BaseController
 
         $user_uuid = $userId;
 
-        $this->setSuccess("", array ("user_uuid"=>$user_uuid));
+        $this->setSuccess("", array("user_uuid" => $user_uuid));
         return true;
     }
 
     // add todo for the app user
 
-    public function addTodo ()
+    public function addTodo()
     {
         $user_uuid = $this->request->get("user_uuid", "");
         $name = $this->request->get("name", "");
@@ -109,7 +111,7 @@ class UserController extends BaseController
         $alarm = $this->request->get("alarm", 0);
 
         $latency_start = $this->request->get("latency_start", 0);
-        $latency_end = time ();
+        $latency_end = time();
 
         if (empty ($alarm)) {
             return $this->setFailed("Alarm time should not be empty");
@@ -117,14 +119,14 @@ class UserController extends BaseController
 
         if ($alarm - $latency_end <= 60) {
 
-            return $this->setFailed("We are not able to send you remote notification #", array("latency_end"=>$latency_end, "latency_start"=>$latency_start, "alarm"=>$alarm));
+            return $this->setFailed("We are not able to send you remote notification #", array("latency_end" => $latency_end, "latency_start" => $latency_start, "alarm" => $alarm));
 
         }
 
         $data["user_uuid"] = $user_uuid;
         $data["name"] = $name;
         $data["description"] = $description;
-        $data["user_info"] = json_encode(array ("todo_id"=>$todo_id, "alert_id"=>$alert_id, "type"=>"todo"));
+        $data["user_info"] = json_encode(array("todo_id" => $todo_id, "alert_id" => $alert_id, "type" => "todo"));
 
         $data["alarm"] = $alarm;
 
@@ -140,10 +142,20 @@ class UserController extends BaseController
         }
 
         $todo = new Todo();
-        if ($todo->addTodo($data)) {
+        $todo_uuid = $todo->todoExists($data);
+
+        if ($todo_uuid) {
+
+            $data["todo_uuid"] = $todo_uuid;
+            $todo->updateTodo($data);
 
         } else {
-            return $this->setFailed("Wrong db operation");
+
+            if ($todo->addTodo($data)) {
+
+            } else {
+                return $this->setFailed("Wrong db operation");
+            }
         }
 
         return true;
@@ -152,7 +164,7 @@ class UserController extends BaseController
     // add appointment for current user
     // under development
 
-    public function addAppointment ()
+    public function addAppointment()
     {
         $user_uuid = $this->request->get("user_uuid", "");
         $name = $this->request->get("name", "");
@@ -165,7 +177,7 @@ class UserController extends BaseController
         $alarm = $this->request->get("alarm", 0);
 
         $latency_start = $this->request->get("latency_start", 0);
-        $latency_end = time ();
+        $latency_end = time();
 
         if (empty ($alarm)) {
             return $this->setFailed("Alarm time should not be empty");
@@ -173,14 +185,14 @@ class UserController extends BaseController
 
         if ($alarm - $latency_end <= 60) {
 
-            return $this->setFailed("We are not able to send you remote notification #", array("latency_end"=>$latency_end, "latency_start"=>$latency_start, "alarm"=>$alarm));
+            return $this->setFailed("We are not able to send you remote notification #", array("latency_end" => $latency_end, "latency_start" => $latency_start, "alarm" => $alarm));
 
         }
 
         $data["user_uuid"] = $user_uuid;
         $data["name"] = $name;
         $data["description"] = $description;
-        $data["user_info"] = json_encode(array ("todo_id"=>$todo_id, "alert_id"=>$alert_id, "type"=>"todo"));
+        $data["user_info"] = json_encode(array("todo_id" => $todo_id, "alert_id" => $alert_id, "type" => "todo"));
 
         $data["alarm"] = $alarm;
 

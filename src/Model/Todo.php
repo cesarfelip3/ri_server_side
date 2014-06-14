@@ -24,7 +24,7 @@ class Todo extends Model
 
         $data["todo_uuid"] = uniqid();
         $data["create_date"] = time ();
-
+        $data["description"] = $this->db->quote ($data["description"]);
         $this->db->insert($this->table, $data);
 
         return true;

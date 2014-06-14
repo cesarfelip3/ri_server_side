@@ -97,6 +97,8 @@ class UserController extends BaseController
         $data["latency_start"] = $latency_start;
         $data["latency_end"] = $latency_end;
 
+        return $this->setFailed("debug", $data);
+
         $user = new User();
         $user_uuid = $user->userExists($user_uuid);
 

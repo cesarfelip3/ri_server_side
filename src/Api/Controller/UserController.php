@@ -24,6 +24,9 @@ class UserController extends BaseController
     // if the app is going to background, then enable it
     // if the app is going to foreground, then disable it
 
+    // when the user login, the push notification is disabled
+    // only if the user is available, then it's enabled
+
     public function switchPushNotification ()
     {
 
@@ -39,6 +42,8 @@ class UserController extends BaseController
         if (!$user_uuid) {
             return $this->setFailed("There is no user with current id#$user_uuid");
         }
+
+        $user->updateUser($data);
 
     }
 

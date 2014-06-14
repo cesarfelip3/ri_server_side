@@ -83,7 +83,7 @@ class UserController extends BaseController
 
         if ($latency_end - $alarm - ($latency_end - $latency_start) * 2 <= 0) {
 
-            return $this->setFailed("We are not able to send you remote notification #");
+            return $this->setFailed("We are not able to send you remote notification #", array("latency_end"=>$latency_end, "latency_start"=>$latency_start, "alarm"=>$alarm));
         }
 
         $data["user_uuid"] = $user_uuid;

@@ -30,7 +30,6 @@ DROP TABLE IF EXISTS `todo`;
 CREATE TABLE IF NOT EXISTS `todo` (
   `todo_id` int(11) NOT NULL AUTO_INCREMENT,
   `todo_uuid` varchar(255) NOT NULL DEFAULT '',
-  `person_uuid` varchar(255) NOT NULL DEFAULT '',
   `user_uuid` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '',
   `description` varchar(255) NOT NULL DEFAULT '',
@@ -53,7 +52,6 @@ DROP TABLE IF EXISTS `appointment`;
 CREATE TABLE IF NOT EXISTS `appointment` (
   `appointment_id` int(11) NOT NULL AUTO_INCREMENT,
   `appointment_uuid` varchar(255) NOT NULL DEFAULT '',
-  `person_uuid` varchar(255) NOT NULL DEFAULT '',
   `user_uuid` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '',
   `description` varchar(255) NOT NULL DEFAULT '',
@@ -64,35 +62,6 @@ CREATE TABLE IF NOT EXISTS `appointment` (
   `status` int(11) NOT NULL DEFAULT '0',
   `create_date` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`appointment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `person`
---
-
-DROP TABLE IF EXISTS `person`;
-CREATE TABLE IF NOT EXISTS `person` (
-  `person_id` int(20) NOT NULL AUTO_INCREMENT,
-  `person_uuid` varchar(255) NOT NULL DEFAULT '',
-  `user_uuid` varchar(255) NOT NULL DEFAULT '',
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `status` varchar(32) NOT NULL DEFAULT '',
-  `approved` int(11) NOT NULL DEFAULT '0',
-  `create_date` int(11) NOT NULL DEFAULT '0',
-  `modified_date` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`person_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
-DROP TABLE IF EXISTS `setting`;
-CREATE TABLE IF NOT EXISTS `file` (
-  `setting_id` int(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `value` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`setting_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --

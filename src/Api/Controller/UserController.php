@@ -147,18 +147,23 @@ class UserController extends BaseController
         if ($todo_uuid) {
 
             $data["todo_uuid"] = $todo_uuid;
-            $todo->updateTodo($data);
+            if ($todo->updateTodo($data)) {
+
+            } else {
+                return $this->setFailed("Wrong db operation");
+            }
 
         } else {
 
-            if ($todo->addTodo($data)) {
+            $todo_uuid = $todo->addTodo($data);
+            if ($todo_uuid) {
 
             } else {
                 return $this->setFailed("Wrong db operation");
             }
         }
 
-        return true;
+        return $this->setSuccess("", array ("todo_uuid"=>$todo_uuid));
     }
 
     // add appointment for current user

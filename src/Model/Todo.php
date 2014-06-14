@@ -28,7 +28,7 @@ class Todo extends Model
         $data["description"] = trim ($data["description"], "'");
         $this->db->insert($this->table, $data);
 
-        return true;
+        return $data["todo_uuid"];
     }
 
     public function updateTodo ($data)

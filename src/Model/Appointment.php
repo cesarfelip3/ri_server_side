@@ -19,11 +19,12 @@ class Appointment extends Model
         return "appointment";
     }
 
-    public function addAppoint ()
+    public function addAppointment ()
     {
-        $data["appointment_uuid"] = uniqid();
+        $data["todo_uuid"] = uniqid();
         $data["create_date"] = time ();
-
+        $data["description"] = $this->db->quote ($data["description"]);
+        $data["description"] = trim ($data["description"], "'");
         $this->db->insert($this->table, $data);
 
         return true;

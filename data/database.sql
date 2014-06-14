@@ -87,26 +87,12 @@ CREATE TABLE IF NOT EXISTS `person` (
 
 -- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `file`;
+DROP TABLE IF EXISTS `setting`;
 CREATE TABLE IF NOT EXISTS `file` (
-  `file_id` int(20) NOT NULL AUTO_INCREMENT,
-  `file_uuid` varchar(255) NOT NULL DEFAULT '',
-  `user_uuid` varchar(255) NOT NULL DEFAULT '',
+  `setting_id` int(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
-  `description` varchar(512) NOT NULL DEFAULT '',
-  `mime` varchar(255) NOT NULL DEFAULT '',
-  `type` varchar(32) NOT NULL DEFAULT '',
-  `status` varchar(32) NOT NULL DEFAULT '',
-  `approved` int(11) NOT NULL DEFAULT '0',
-  `thumbnails` int(11) NOT NULL DEFAULT '0',
-  `width` int(11) NOT NULL DEFAULT '0',
-  `height` int(11) NOT NULL DEFAULT '0',
-  `file_name` varchar(255) NOT NULL DEFAULT '',
-  `file_path` varchar(255) NOT NULL DEFAULT '',
-  `sort_order` int(11) NOT NULL DEFAULT '0',
-  `create_date` int(11) NOT NULL DEFAULT '0',
-  `modified_date` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`file_id`)
+  `value` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`setting_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
@@ -118,6 +104,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_uuid` varchar(255) NOT NULL DEFAULT '',
   `dev_token` char(255) NOT NULL DEFAULT '',
+  `dev_token_disable` int(20) NOT NULL DEFAULT '0',
   `username` varchar(32) NOT NULL DEFAULT '',
   `email` varchar(255) NOT NULL DEFAULT '',
   `password` varchar(255) NOT NULL DEFAULT '',

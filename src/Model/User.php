@@ -16,6 +16,9 @@ class User extends Model
         $this->db = self::$DB;
     }
 
+    // we will add user and its token to db
+    // this is called from the app
+
     public function addUser($data)
     {
 
@@ -28,12 +31,16 @@ class User extends Model
         return $data["user_uuid"];
     }
 
+    // we will change the token, from apple documentation
+    // this token could be changed constantly
+    // if the token is changed, and db value not updated
+    // then the message will not be able to send to the user
+
     public function updateUser($data)
     {
         $user_uuid = $data["user_uuid"];
         unset ($data["user_uuid"]);
         $data["modified_date"] = time();
-        $data["dev_token"] = $this->convertToken($data["dev_token"]);
         $this->db->update($this->table, $data, array('user_uuid' => $user_uuid));
     }
 
@@ -42,16 +49,9 @@ class User extends Model
         $this->db->delete($this->table, array('token' => $data["token"]));
     }
 
-    public function userExistsByToken($userId)
-    {
-        $uuid = $this->db->fetchColumn("SELECT user_uuid FROM {$this->table} WHERE token=?", array($userId));
-
-        if (empty ($uuid)) {
-            return false;
-        }
-
-        return $uuid;
-    }
+    //=============================
+    //
+    //=============================
 
     public function userExistsByEmail($email)
     {
@@ -75,6 +75,10 @@ class User extends Model
         return $uuid;
     }
 
+
+    // get all todo and appointment from current user
+    // this could be a long list, so it's paging based
+
     public function getAllNotification ($data)
     {
 
@@ -92,6 +96,10 @@ class User extends Model
         $table_user = User::table();
 
         $result_todo = $this->db->fetchAll ("SELECT * FROM $table_todo WHERE status=? LIMIT {$limit}", array (0));
+        $result = array ();
+
+        // we only get these todo from valid user
+        //
 
         foreach ($result_todo as $key => $todo) {
 
@@ -99,17 +107,14 @@ class User extends Model
             $token = $this->getDevTokenByUUID($user_uuid);
 
             if (empty ($token)) {
-                $this->setFailed("Invalid empty dev token for user#$user_uuid");
-                return false;
+                continue;
             }
 
             $todo["dev_token"] = $token;
-            $result_todo[$key] = $todo;
+            $result[$key] = $todo;
         }
 
         //$result_appoint = $this->db->fetchAll ("SELECT * FROM $table_appoint WHERE status=?", array (1));
-
-        $result = array_merge($result_todo);
 
         return $result;
 
@@ -117,7 +122,7 @@ class User extends Model
 
     public function getDevTokenByUUID ($user_uuid)
     {
-        $token = $this->db->fetchColumn("SELECT dev_token FROM {$this->table} WHERE `user_uuid`=?", array($user_uuid));
+        $token = $this->db->fetchColumn("SELECT dev_token FROM {$this->table} WHERE `user_uuid`=? AND dev_token_status=?", array($user_uuid, 0));
 
         if (empty ($token)) {
             return false;
@@ -125,6 +130,10 @@ class User extends Model
 
         return $token;
     }
+
+    //=======================================
+    //
+    //=======================================
 
     public function convertToken ($token)
     {

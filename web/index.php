@@ -123,7 +123,7 @@ $api->post("auth", function (Request $request) use ($app) {
 $api->post("user/add", function (Request $request) use ($app) {
 
     $controller = new Controller\UserController($request, $app);
-    $ret = $controller->addUser($app['upload.folder']);
+    $ret = $controller->addUser();
 
     $status = 200;
     if ($ret) {

@@ -90,8 +90,13 @@ class UserController extends BaseController
             $user->updateUser($data);
         }
 
-        $user_uuid = $userId;
+        // every time we registered update a dev token
+        // we will have to remove all those alert entity
 
+        $todo = new Todo();
+        $todo->deleteTodoByUser($user_uuid);
+
+        $user_uuid = $userId;
         $this->setSuccess("", array("user_uuid" => $user_uuid));
         return true;
     }
@@ -117,12 +122,6 @@ class UserController extends BaseController
             return $this->setFailed("Alarm time should not be empty");
         }
 
-        if ($alarm - $latency_end <= 60) {
-
-            return $this->setFailed("We are not able to send you remote notification #", array("latency_end" => $latency_end, "latency_start" => $latency_start, "alarm" => $alarm));
-
-        }
-
         $data["user_uuid"] = $user_uuid;
         $data["name"] = $name;
         $data["description"] = $description;
@@ -146,6 +145,13 @@ class UserController extends BaseController
 
         if ($todo_uuid) {
 
+            if ($alarm - $latency_end <= 60) {
+
+                $todo->deleteTodo($todo_uuid);
+                return $this->setFailed("We are not able to send you remote notification #", array("latency_end" => $latency_end, "latency_start" => $latency_start, "alarm" => $alarm));
+
+            }
+
             $data["todo_uuid"] = $todo_uuid;
             if ($todo->updateTodo($data)) {
 
@@ -154,6 +160,12 @@ class UserController extends BaseController
             }
 
         } else {
+
+            if ($alarm - $latency_end <= 60) {
+
+                return $this->setFailed("We are not able to send you remote notification #", array("latency_end" => $latency_end, "latency_start" => $latency_start, "alarm" => $alarm));
+
+            }
 
             $todo_uuid = $todo->addTodo($data);
             if ($todo_uuid) {

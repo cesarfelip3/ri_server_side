@@ -44,6 +44,16 @@ class Todo extends Model
         return true;
     }
 
+    public function deleteTodo ($todoId)
+    {
+        $this->db->delete($this->table, array('todo_uuid'=>$todoId));
+    }
+
+    public function deleteTodoByUser ($userId)
+    {
+        $this->db->delete($this->table, array('user_uuid'=>$userId));
+    }
+
     public function todoExists($data)
     {
         $uuid = $this->db->fetchColumn("SELECT todo_uuid FROM {$this->table} WHERE user_info=? AND user_uuid=?", array($data["user_info"]), $data["user_uuid"]);

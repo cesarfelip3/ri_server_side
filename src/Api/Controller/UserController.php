@@ -81,7 +81,7 @@ class UserController extends BaseController
             return $this->setFailed("Alarm time should not be empty");
         }
 
-        if ($alarm - $latency_end <= 0) {
+        if ($alarm - $latency_end <= 60) {
 
             return $this->setFailed("We are not able to send you remote notification #", array("latency_end"=>$latency_end, "latency_start"=>$latency_start, "alarm"=>$alarm));
 

@@ -67,8 +67,8 @@ class PushController extends BaseController
             $devToken = $notification["dev_token"];
             //$devToken = '111db24975bb6c6b63214a8d268052aa0a965cc1e32110ab06a72b19074c2222';
 
-            $this->debug($devToken);
-            $devToken = '72df6b2b4988cf8e5fea115a4814ba40eb9186e4a04e68440be98b18e6fb51bc';
+            //$this->debug($devToken);
+            //$devToken = '72df6b2b4988cf8e5fea115a4814ba40eb9186e4a04e68440be98b18e6fb51bc';
 
             // Set the device(s) to push the notification to.
             $devices = new DeviceCollection(array(

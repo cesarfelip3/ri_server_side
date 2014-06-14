@@ -49,6 +49,8 @@ class UserController extends BaseController
             return $this->setFailed("There is no user with current id#$user_uuid");
         }
 
+        return $this->setSuccess("", array ("a"=>json_decode($user_info_list), "j"=>$user_info_list));
+
         $user->updateUser($data);
 
         $user_info_list = json_decode($user_info_list);

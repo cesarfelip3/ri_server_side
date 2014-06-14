@@ -44,16 +44,16 @@ class PushController extends BaseController
 
         $pushManager = new PushManager(PushManager::ENVIRONMENT_DEV);
 
+        if (!file_exists($certificate)) {
+
+            $this->setFailed("pem not exists # $certificate");
+            return false;
+        }
+
         // Then declare an adapter.
         $apnsAdapter = new ApnsAdapter(array(
-            'certificate' => $certificate,
-            'passPhrase' => 'example',
+            'certificate' => $certificate
         ));
-
-        // $this->debug($pushManager);
-
-        // get devices from user table
-
 
         $user = new User();
 
@@ -65,10 +65,13 @@ class PushController extends BaseController
         foreach ($result as $notification) {
 
             $devToken = $notification["dev_token"];
+            //$devToken = '111db24975bb6c6b63214a8d268052aa0a965cc1e32110ab06a72b19074c2222';
+
+            $devToken = '72df6b2b4988cf8e5fea115a4814ba40eb9186e4a04e68440be98b18e6fb51bc';
 
             // Set the device(s) to push the notification to.
             $devices = new DeviceCollection(array(
-                new Device($devToken, array('badge' => 1))
+                new Device($devToken)
             ));
 
             // Then, create the push skel.
@@ -90,8 +93,10 @@ class PushController extends BaseController
                 ))
             ));
 
+
             // Finally, create and add the push to the manager, and push it!
             $push = new Push($apnsAdapter, $devices, $message);
+
             $pushManager->add($push);
             $pushManager->push(); // Returns a collection of notified devices
 

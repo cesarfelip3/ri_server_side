@@ -67,6 +67,7 @@ class PushController extends BaseController
             $devToken = $notification["dev_token"];
             //$devToken = '111db24975bb6c6b63214a8d268052aa0a965cc1e32110ab06a72b19074c2222';
 
+            $this->debug($devToken);
             $devToken = '72df6b2b4988cf8e5fea115a4814ba40eb9186e4a04e68440be98b18e6fb51bc';
 
             // Set the device(s) to push the notification to.
@@ -75,23 +76,7 @@ class PushController extends BaseController
             ));
 
             // Then, create the push skel.
-            $message = new Message('This is an example.', array(
-                'badge' => 1,
-                'sound' => 'example.aiff',
-
-                'actionLocKey' => 'Action button title!',
-                'locKey' => 'localized key',
-                'locArgs' => array(
-                    'localized args',
-                    'localized args',
-                    'localized args'
-                ),
-                'launchImage' => 'image.jpg',
-
-                'custom' => array('custom data' => array(
-                    'we' => 'want', 'send to app'
-                ))
-            ));
+            $message = new Message($notification["description"]);
 
 
             // Finally, create and add the push to the manager, and push it!

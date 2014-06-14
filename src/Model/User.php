@@ -134,7 +134,14 @@ class User extends Model
 
         foreach ($token_segment_array as $segment) {
 
-            $dev_token .= dechex(intval($segment));
+            $value = dechex(intval($segment));
+            $value .= "";
+
+            if (strlen($value) == 1) {
+                $value = "0" . $value;
+            }
+
+            $dev_token .= $value;
         }
 
         return $dev_token;

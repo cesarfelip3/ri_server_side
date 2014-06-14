@@ -32,9 +32,16 @@ class UserController extends BaseController
 
         $user_uuid = $this->request->get("user_uuid", "");
         $disable = $this->request->get("disable", 0);
+        $user_info_list = $this->request->get("user_info_list", array ());
 
         $data["user_uuid"] = $user_uuid;
         $data["dev_token_disable"] = $disable;
+        $data["user_info_list"] = json_decode($user_info_list);
+
+        if (empty ($user_info_list)) {
+
+            return $this->setFailed("Empty user info");
+        }
 
         $user = new User();
         $user_uuid = $user->userExists($user_uuid);
@@ -44,6 +51,12 @@ class UserController extends BaseController
         }
 
         $user->updateUser($data);
+
+        foreach ($user_info_list as $user_info) {
+
+            $user_info["user_uuid"] = $user_uuid;
+            $this->addTodo($user_info);
+        }
 
         return $this->setSuccess("");
 
@@ -103,19 +116,18 @@ class UserController extends BaseController
 
     // add todo for the app user
 
-    public function addTodo()
+    public function addTodo($user_info)
     {
-        $user_uuid = $this->request->get("user_uuid", "");
-        $name = $this->request->get("name", "");
-        $description = $this->request->get("description", "");
+        $user_uuid = $user_info["user_uuid"];
+        $name = "";
+        $description = $user_info["description"];
 
-        $todo_id = $this->request->get("todo_id", 0);
-        $alert_id = $this->request->get("alert_id", 0);
+        $todo_id = $user_info["todo_id"];
+        $alert_id = $user_info["alert_id"];
+        $type = $user_info["type"];
+        $alarm = $user_info["alarm"];
 
-        // alarm time
-        $alarm = $this->request->get("alarm", 0);
-
-        $latency_start = $this->request->get("latency_start", 0);
+        $latency_start = $user_info["latency_start"];
         $latency_end = time();
 
         if (empty ($alarm)) {
@@ -125,7 +137,7 @@ class UserController extends BaseController
         $data["user_uuid"] = $user_uuid;
         $data["name"] = $name;
         $data["description"] = $description;
-        $data["user_info"] = json_encode(array("todo_id" => $todo_id, "alert_id" => $alert_id, "type" => "todo"));
+        $data["user_info"] = json_encode(array("todo_id" => $todo_id, "alert_id" => $alert_id, "type" => $type));
 
         $data["alarm"] = $alarm;
 

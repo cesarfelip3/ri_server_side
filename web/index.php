@@ -120,7 +120,7 @@ $api->post("auth", function (Request $request) use ($app) {
 // we will save token here for each device
 // 
 
-$api->post("user/add", function (Request $request) use ($app) {
+$api->post("user/push/register/token", function (Request $request) use ($app) {
 
     $controller = new Controller\UserController($request, $app);
     $ret = $controller->addUser();
@@ -135,38 +135,7 @@ $api->post("user/add", function (Request $request) use ($app) {
     return $app->json($controller->getError(), $status);
 });
 
-// image / upload
-$api->post("todo/add", function (Request $request) use ($app) {
-
-    $controller = new Controller\UserController($request, $app);
-    $ret = $controller->addTodo();
-
-    $status = 200;
-    if ($ret) {
-        $status = 200;
-    } else {
-        $status = 400;
-    }
-
-    return $app->json($controller->getError(), $status);
-});
-
-$api->post("appointment/add", function (Request $request) use ($app) {
-
-    $controller = new Controller\UserController($request, $app);
-    $ret = $controller->addAppointment();
-
-    $status = 200;
-    if ($ret) {
-        $status = 200;
-    } else {
-        $status = 400;
-    }
-
-    return $app->json($controller->getError(), $status);
-});
-
-$api->post("push/enable", function (Request $request) use ($app) {
+$api->post("user/push/switch", function (Request $request) use ($app) {
 
     $controller = new Controller\UserController($request, $app);
     $ret = $controller->switchPushNotification();

@@ -116,7 +116,7 @@ class UserController extends BaseController
 
     // add todo for the app user
 
-    public function addTodo($user_info)
+    protected function addTodo($user_info)
     {
         $user_uuid = $user_info["user_uuid"];
         $name = "";

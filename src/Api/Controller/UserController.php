@@ -36,7 +36,6 @@ class UserController extends BaseController
 
         $data["user_uuid"] = $user_uuid;
         $data["dev_token_disable"] = $disable;
-        $data["user_info_list"] = json_decode($user_info_list);
 
         if (empty ($user_info_list)) {
 

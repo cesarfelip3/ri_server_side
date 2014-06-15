@@ -54,7 +54,7 @@ class UserController extends BaseController
         $user->updateUser($data);
         $user_info_list = json_decode($user_info_list, true);
 
-        return $this->setSuccess("" . var_export($user_info_list, true));
+        //return $this->setSuccess("" . var_export($user_info_list, true));
 
         $info = array ();
         foreach ($user_info_list as $user_info) {

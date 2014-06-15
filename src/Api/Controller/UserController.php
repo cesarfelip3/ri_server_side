@@ -59,9 +59,9 @@ class UserController extends BaseController
         $info = array ();
         foreach ($user_info_list as $user_info) {
 
-            //$user_info["user_uuid"] = $user_uuid;
-
+            $user_info["user_uuid"] = $user_uuid;
             return $this->setSuccess("", var_export($user_info, true));
+            
             $this->addTodo($user_info);
         }
 

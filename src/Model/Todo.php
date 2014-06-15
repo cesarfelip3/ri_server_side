@@ -56,7 +56,7 @@ class Todo extends Model
 
     public function todoExists($data)
     {
-        $uuid = $this->db->fetchColumn("SELECT todo_uuid FROM {$this->table} WHERE user_info=? AND user_uuid=?", array($data["user_info"]), $data["user_uuid"]);
+        $uuid = $this->db->fetchColumn("SELECT todo_uuid FROM {$this->table} WHERE user_info=? AND user_uuid=?", array($data["user_info"], $data["user_uuid"]));
 
         if (empty ($uuid)) {
             return false;

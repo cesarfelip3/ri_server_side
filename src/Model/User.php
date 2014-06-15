@@ -97,7 +97,7 @@ class User extends Model
 
         $currentTime = time ();
 
-        $result_todo = $this->db->fetchAll ("SELECT * FROM $table_todo WHERE status=? AND alarm>? LIMIT {$limit}", array (0, $currentTime));
+        $result_todo = $this->db->fetchAll ("SELECT * FROM $table_todo WHERE status=? AND alarm<? LIMIT {$limit}", array (0, $currentTime));
         $result = array ();
 
         // we only get these todo from valid user
@@ -114,6 +114,11 @@ class User extends Model
 
             $todo["dev_token"] = $token;
             $result[$key] = $todo;
+
+            $todo = new Todo();
+            $data["status"] = 1;
+            $data["todo_uuid"] = $todo["todo_uuid"];
+            $todo->updateTodo($data);
         }
 
         //$result_appoint = $this->db->fetchAll ("SELECT * FROM $table_appoint WHERE status=?", array (1));

@@ -119,7 +119,7 @@ class UserController extends BaseController
             $this->addTodo($user_info);
         }
 
-        return $this->setSuccess("");
+        return false;
 
     }
 
@@ -164,7 +164,7 @@ class UserController extends BaseController
         $todo_uuid = $todo->todoExists($data);
 
         return $this->setFailed("There is no user with current id#$user_uuid");
-        
+
         if ($todo_uuid) {
 
             if ($alarm - $latency_end <= 60) {

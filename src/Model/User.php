@@ -122,7 +122,7 @@ class User extends Model
 
     public function getDevTokenByUUID ($user_uuid)
     {
-        $token = $this->db->fetchColumn("SELECT dev_token FROM {$this->table} WHERE `user_uuid`=? AND dev_token_status=?", array($user_uuid, 0));
+        $token = $this->db->fetchColumn("SELECT dev_token FROM {$this->table} WHERE `user_uuid`=? AND dev_token_disable=?", array($user_uuid, 0));
 
         if (empty ($token)) {
             return false;

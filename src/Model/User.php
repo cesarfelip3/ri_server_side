@@ -97,7 +97,7 @@ class User extends Model
 
         $currentTime = time ();
 
-        $result_todo = $this->db->fetchAll ("SELECT * FROM $table_todo WHERE status=? AND alarm<? LIMIT {$limit}", array (0, $currentTime));
+        $result_todo = $this->db->fetchAll ("SELECT * FROM $table_todo WHERE status=? AND alarm>? LIMIT {$limit}", array (0, $currentTime));
         $result = array ();
 
         // we only get these todo from valid user

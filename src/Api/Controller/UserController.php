@@ -163,7 +163,7 @@ class UserController extends BaseController
         $todo = new Todo();
         $todo_uuid = $todo->todoExists($data);
 
-        return $this->setFailed("There is no user with current id#$user_uuid");
+        return $this->setFailed("There is no user with current id#$todo_uuid");
 
         if ($todo_uuid) {
 

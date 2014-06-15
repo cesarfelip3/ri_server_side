@@ -119,7 +119,7 @@ class UserController extends BaseController
             $this->addTodo($user_info);
         }
 
-        return false;
+        return $this->setSuccess("");
 
     }
 

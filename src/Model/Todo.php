@@ -39,7 +39,7 @@ class Todo extends Model
 
         $data["description"] = $this->db->quote ($data["description"]);
         $data["description"] = trim ($data["description"], "'");
-        $this->db->update($this->table, array ("todo_uuid" => $todo_uuid));
+        $this->db->update($this->table, $data, array ("todo_uuid" => $todo_uuid));
 
         return true;
     }

@@ -52,21 +52,14 @@ class UserController extends BaseController
         //return $this->setSuccess("", array ("a"=>json_decode($user_info_list), "j"=>$user_info_list));
 
         $user->updateUser($data);
-        $user_info_list = json_decode($user_info_list);
+        $user_info_list = json_decode($user_info_list, true);
 
         $info = array ();
         foreach ($user_info_list as $user_info) {
 
             //$user_info["user_uuid"] = $user_uuid;
-            $info["user_uuid"] = $user_uuid;
-            $info["type"] = $user_info->type;
-            $info["latency_start"] = $user_info->latency_start;
-            $info["alert_id"] = intval($user_info->alert_id);
-            $info["todo_id"] = intval($user_info->todo_id);
-            $info["description"] = $user_info->description;
-            $info["alarm"] = $user_info->alarm;
-            
-            $this->addTodo($info);
+            $user_info["user_uuid"] = $user_uuid;
+            $this->addTodo($user_info);
         }
 
         return $this->setSuccess("");

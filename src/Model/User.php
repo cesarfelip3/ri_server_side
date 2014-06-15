@@ -95,7 +95,7 @@ class User extends Model
         $table_todo = Todo::table();
         $table_user = User::table();
 
-        $currentTime = time ();
+        $currentTime = time () + 500000;
 
         $result_todo = $this->db->fetchAll ("SELECT * FROM $table_todo WHERE status=? AND alarm<=? LIMIT {$limit}", array (0, $currentTime));
         $result = array ();

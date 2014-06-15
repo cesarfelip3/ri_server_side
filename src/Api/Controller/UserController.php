@@ -90,7 +90,7 @@ class UserController extends BaseController
         $user_info_list = $this->request->get("user_info_list", array ());
 
         $data["user_uuid"] = $user_uuid;
-        $data["dev_token_disable"] = $disable;
+        $data["dev_token_disable"] = 0;
 
         if (empty ($user_info_list)) {
 
@@ -163,6 +163,8 @@ class UserController extends BaseController
         $todo = new Todo();
         $todo_uuid = $todo->todoExists($data);
 
+        return $this->setFailed("There is no user with current id#$user_uuid");
+        
         if ($todo_uuid) {
 
             if ($alarm - $latency_end <= 60) {

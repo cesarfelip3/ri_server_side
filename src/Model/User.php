@@ -115,10 +115,10 @@ class User extends Model
             $todo["dev_token"] = $token;
             $result[$key] = $todo;
 
-            $todo = new Todo();
+            $_todo = new Todo();
             $data["status"] = 1;
             $data["todo_uuid"] = $todo["todo_uuid"];
-            $todo->updateTodo($data);
+            $_todo->updateTodo($data);
         }
 
         //$result_appoint = $this->db->fetchAll ("SELECT * FROM $table_appoint WHERE status=?", array (1));

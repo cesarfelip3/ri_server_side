@@ -59,6 +59,7 @@ class UserController extends BaseController
 
             $data['user_uuid'] = $uuid;
             $data["dev_token"] = $user->convertToken($data["dev_token"]);
+            $data["dev_token_disable"] = 1;
             $user->updateUser($data);
         }
 

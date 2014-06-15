@@ -20,54 +20,6 @@ class UserController extends BaseController
         $this->response = new Response();
     }
 
-    // enable or disable remote push notification
-    // if the app is going to background, then enable it
-    // if the app is going to foreground, then disable it
-
-    // when the user login, the push notification is disabled
-    // only if the user is available, then it's enabled
-
-    public function switchPushNotification()
-    {
-
-        $user_uuid = $this->request->get("user_uuid", "");
-        $disable = $this->request->get("disable", 0);
-        $user_info_list = $this->request->get("user_info_list", array ());
-
-        $data["user_uuid"] = $user_uuid;
-        $data["dev_token_disable"] = $disable;
-
-        if (empty ($user_info_list)) {
-
-            return $this->setFailed("Empty user info");
-        }
-
-        $user = new User();
-        $user_uuid = $user->userExists($user_uuid);
-
-        if (!$user_uuid) {
-            return $this->setFailed("There is no user with current id#$user_uuid");
-        }
-
-        //return $this->setSuccess("", array ("a"=>json_decode($user_info_list), "j"=>$user_info_list));
-
-        $user->updateUser($data);
-        $user_info_list = json_decode($user_info_list, true);
-
-        //return $this->setSuccess("" . var_export($user_info_list, true));
-
-        $info = array ();
-        foreach ($user_info_list as $user_info) {
-
-            $user_info["user_uuid"] = $user_uuid;
-            return $this->setSuccess("", var_export($user_info, true));
-            
-            $this->addTodo($user_info);
-        }
-
-        return $this->setSuccess("");
-
-    }
 
     // if the app user login, we will add user to push notification server
     // this user will be able to sync its todo and appointment in server
@@ -121,6 +73,56 @@ class UserController extends BaseController
         return true;
     }
 
+
+    // enable or disable remote push notification
+    // if the app is going to background, then enable it
+    // if the app is going to foreground, then disable it
+
+    // when the user login, the push notification is disabled
+    // only if the user is available, then it's enabled
+
+    public function switchPushNotification()
+    {
+
+        $user_uuid = $this->request->get("user_uuid", "");
+        $disable = $this->request->get("disable", 0);
+        $user_info_list = $this->request->get("user_info_list", array ());
+
+        $data["user_uuid"] = $user_uuid;
+        $data["dev_token_disable"] = $disable;
+
+        if (empty ($user_info_list)) {
+
+            return $this->setFailed("Empty user info");
+        }
+
+        $user = new User();
+        $user_uuid = $user->userExists($user_uuid);
+
+        if (!$user_uuid) {
+            return $this->setFailed("There is no user with current id#$user_uuid");
+        }
+
+        //return $this->setSuccess("", array ("a"=>json_decode($user_info_list), "j"=>$user_info_list));
+
+        $user->updateUser($data);
+        $user_info_list = json_decode($user_info_list, true);
+
+        //return $this->setSuccess("" . var_export($user_info_list, true));
+
+        $info = array ();
+        foreach ($user_info_list as $user_info) {
+
+            $user_info["user_uuid"] = $user_uuid;
+            return $this->setSuccess("", var_export($user_info, true));
+
+            $this->addTodo($user_info);
+        }
+
+        return $this->setSuccess("");
+
+    }
+
     // add todo for the app user
 
     protected function addTodo($user_info)
@@ -150,7 +152,6 @@ class UserController extends BaseController
 
         $data["latency_start"] = $latency_start;
         $data["latency_end"] = $latency_end;
-
 
         $user = new User();
         $user_uuid = $user->userExists($user_uuid);

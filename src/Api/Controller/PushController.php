@@ -60,7 +60,7 @@ class PushController extends BaseController
         $result = $user->getAllNotification($data);
 
         //$this->debug($certificate, true, false);
-        $this->debug($result, false, false);
+        $this->debug($result);
 
         foreach ($result as $notification) {
 

@@ -53,6 +53,7 @@ class UserController extends BaseController
 
         $user->updateUser($data);
 
+        return true;
         $user_info_list = json_decode($user_info_list);
         foreach ($user_info_list as $user_info) {
 

@@ -216,7 +216,7 @@ class UserController extends BaseController
         $name = "";
         $description = $user_info["description"];
 
-        $appointment_id = $user_info["appointment_id"];
+        $appointment_id = $user_info["todo_id"];
         $alert_id = $user_info["alert_id"];
         $type = $user_info["type"];
         $alarm = $user_info["alarm"];
@@ -231,7 +231,7 @@ class UserController extends BaseController
         $data["user_uuid"] = $user_uuid;
         $data["name"] = $name;
         $data["description"] = $description;
-        $data["user_info"] = json_encode(array("appointment_id" => $appointment_id, "alert_id" => $alert_id, "type" => $type));
+        $data["user_info"] = json_encode(array("todo_id" => $appointment_id, "alert_id" => $alert_id, "type" => $type));
 
         $data["alarm"] = $alarm;
 

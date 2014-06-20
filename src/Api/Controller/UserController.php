@@ -109,6 +109,9 @@ class UserController extends BaseController
         $user->updateUser($data);
         $user_info_list = json_decode($user_info_list, true);
 
+        if (empty ($user_info_list)) {
+            return $this->setFailed("empty user info list");
+        }
         //return $this->setSuccess("" . var_export($user_info_list, true));
 
         $info = array ();

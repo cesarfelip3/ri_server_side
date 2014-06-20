@@ -91,17 +91,19 @@ class User extends Model
 
         $limit = "$page, $pageSize";
 
-        $table_appoint = Appointment::table();
+        $table_appointment = Appointment::table();
         $table_todo = Todo::table();
         $table_user = User::table();
 
         $currentTime = time ();
 
-        $result_todo = $this->db->fetchAll ("SELECT * FROM $table_todo WHERE status=? AND alarm<=? LIMIT {$limit}", array (0, $currentTime));
         $result = array ();
+        $result_todo = $this->db->fetchAll ("SELECT * FROM $table_todo WHERE status=? AND alarm<=? LIMIT {$limit}", array (0, $currentTime));
 
         // we only get these todo from valid user
         //
+
+        $_todo = new Todo();
 
         foreach ($result_todo as $key => $todo) {
 
@@ -120,7 +122,28 @@ class User extends Model
             $_todo->updateTodo($_data);
         }
 
-        //$result_appoint = $this->db->fetchAll ("SELECT * FROM $table_appoint WHERE status=?", array (1));
+        $result_appointment = $this->db->fetchAll ("SELECT * FROM $table_appointment WHERE status=? AND alarm<=? LIMIT {$limit}", array (0, $currentTime));
+
+        // we only get these todo from valid user
+        //
+
+        $_todo = new Appointment();
+        foreach ($result_appointment as $key => $todo) {
+
+            $user_uuid = $todo["user_uuid"];
+            $token = $this->getDevTokenByUUID($user_uuid);
+
+            if (empty ($token)) {
+                continue;
+            }
+
+            $todo["dev_token"] = $token;
+            $result[$key] = $todo;
+
+            $_data["status"] = 1;
+            $_data["appointment_uuid"] = $todo["appointment_uuid"];
+            $_todo->updateAppointment($_data);
+        }
 
         return $result;
 

@@ -116,7 +116,14 @@ class UserController extends BaseController
 
             $user_info["user_uuid"] = $user_uuid;
             //return $this->setSuccess("", var_export($user_info, true));
-            $this->addTodo($user_info);
+
+            if ($user_info["type"] == "todo") {
+                $this->addTodo($user_info);
+            }
+
+            if ($user_info["type"] == "appointment") {
+                $this->addAppointment($user_info);
+            }
         }
 
         return $this->setSuccess("");
@@ -173,6 +180,7 @@ class UserController extends BaseController
             }
 
             $data["todo_uuid"] = $todo_uuid;
+            $data["status"] = 0;
             if ($todo->updateTodo($data)) {
 
             } else {
@@ -201,41 +209,34 @@ class UserController extends BaseController
     // add appointment for current user
     // under development
 
-    public function addAppointment()
+
+    protected function addAppointment($user_info)
     {
-        $user_uuid = $this->request->get("user_uuid", "");
-        $name = $this->request->get("name", "");
-        $description = $this->request->get("description", "");
+        $user_uuid = $user_info["user_uuid"];
+        $name = "";
+        $description = $user_info["description"];
 
-        $todo_id = $this->request->get("todo_id", 0);
-        $alert_id = $this->request->get("alert_id", 0);
+        $appointment_id = $user_info["appointment_id"];
+        $alert_id = $user_info["alert_id"];
+        $type = $user_info["type"];
+        $alarm = $user_info["alarm"];
 
-        // alarm time
-        $alarm = $this->request->get("alarm", 0);
-
-        $latency_start = $this->request->get("latency_start", 0);
+        $latency_start = $user_info["latency_start"];
         $latency_end = time();
 
         if (empty ($alarm)) {
             return $this->setFailed("Alarm time should not be empty");
         }
 
-        if ($alarm - $latency_end <= 60) {
-
-            return $this->setFailed("We are not able to send you remote notification #", array("latency_end" => $latency_end, "latency_start" => $latency_start, "alarm" => $alarm));
-
-        }
-
         $data["user_uuid"] = $user_uuid;
         $data["name"] = $name;
         $data["description"] = $description;
-        $data["user_info"] = json_encode(array("todo_id" => $todo_id, "alert_id" => $alert_id, "type" => "todo"));
+        $data["user_info"] = json_encode(array("appointment_id" => $appointment_id, "alert_id" => $alert_id, "type" => $type));
 
         $data["alarm"] = $alarm;
 
         $data["latency_start"] = $latency_start;
         $data["latency_end"] = $latency_end;
-
 
         $user = new User();
         $user_uuid = $user->userExists($user_uuid);
@@ -244,14 +245,43 @@ class UserController extends BaseController
             return $this->setFailed("There is no user with current id#$user_uuid");
         }
 
-        $todo = new Appointment();
-        if ($todo->addAppointment($data)) {
+        $appointment = new Appointment();
+        $appointment_uuid = $appointment->appointmentExists($data);
+
+        if ($appointment_uuid !== false) {
+
+            if ($alarm - $latency_end <= 60) {
+
+                $appointment->deleteAppointment($appointment_uuid);
+                return $this->setFailed("We are not able to send you remote notification #", array("latency_end" => $latency_end, "latency_start" => $latency_start, "alarm" => $alarm));
+
+            }
+
+            $data["appointment_uuid"] = $appointment_uuid;
+            $data["status"] = 0;
+            if ($appointment->updateAppointment($data)) {
+
+            } else {
+                return $this->setFailed("Wrong db operation");
+            }
 
         } else {
-            return $this->setFailed("Wrong db operation");
+
+            if ($alarm - $latency_end <= 60) {
+
+                return $this->setFailed("We are not able to send you remote notification #", array("latency_end" => $latency_end, "latency_start" => $latency_start, "alarm" => $alarm));
+
+            }
+
+            $appointment_uuid = $appointment->addAppointment($data);
+            if ($appointment_uuid) {
+
+            } else {
+                return $this->setFailed("Wrong db operation");
+            }
         }
 
-        return true;
+        return $this->setSuccess("", array ("appointment_uuid"=>$appointment_uuid));
     }
 
 }

@@ -156,7 +156,7 @@ $api->post("user/push/switch", function (Request $request) use ($app) {
 $api->post("push/apns", function (Request $request) use ($app) {
 
     $controller = new Controller\PushController($request, $app);
-    $ret = $controller->push ($app["certificates.folder"] . "ri_dev_pns.pem");
+    $ret = $controller->push($app["certificates.folder"] . "ri_dev_pns.pem");
 
     $status = 200;
     if ($ret) {
@@ -192,13 +192,13 @@ $test->get("user/add", function () use ($app, $basename, $api_v1) {
         'fileinfo' => '@' . $file_name_with_full_path
     );
 
-    $target_url = "http://localhost" . $basename . "/" . $api_v1 . "user/push/switch";
+    $target_url = "http://localhost" . $basename . "/" . $api_v1 . "user/add";
     require_once __DIR__ . '/test/Curl.class.php';
 
     $curl = new Curl();
 
     $curl->post($target_url, $post);
-    print_r (json_encode($curl->response));
+    print_r(json_encode($curl->response));
 
     exit;
 });
@@ -208,25 +208,27 @@ $test->get("todo/add", function () use ($app, $basename, $api_v1) {
     $file_name_with_full_path = realpath(__DIR__ . "/pi-512.png");
     $post = array(
         "user_uuid" => "53a4555a119a9",
-        "name" => "hello",
-        "description" => "test push notification message",
-        "todo_id" => 2,
-        "alert_id" => 1,
-        "alarm" => time() - 3600,
-        "latency_start" => time()
+        "user_info_list" => json_encode(array(
+            "description" => "test push notification message",
+            "todo_id" => 2,
+            "alert_id" => 1,
+            "alarm" => time() - 3600,
+            "latency_start" => time(),
+            "type" => "todo"
+        )),
     );
 
     if ($app["debug"] == false) {
-        $post["user_uuid"] = "539b8446214f9";
+        $post["user_uuid"] = "53a4555a119a9";
     }
 
-    $target_url = "http://localhost" . $basename . "/" . $api_v1 . "todo/add";
+    $target_url = "http://localhost" . $basename . "/" . $api_v1 . "user/push/switch";
     require_once __DIR__ . '/test/Curl.class.php';
 
     $curl = new Curl();
 
     $curl->post($target_url, $post);
-    print_r (json_encode($curl->response));
+    print_r(json_encode($curl->response));
 
     exit;
 });
@@ -234,8 +236,7 @@ $test->get("todo/add", function () use ($app, $basename, $api_v1) {
 $test->get("push", function () use ($app, $basename, $api_v1) {
 
     $file_name_with_full_path = realpath(__DIR__ . "/pi-512.png");
-    $post = array(
-    );
+    $post = array();
 
     $target_url = "http://localhost" . $basename . "/" . $api_v1 . "push/apns";
     require_once __DIR__ . '/test/Curl.class.php';
@@ -244,7 +245,7 @@ $test->get("push", function () use ($app, $basename, $api_v1) {
 
     $curl->post($target_url, $post);
 
-    print_r ($curl->response);
+    print_r($curl->response);
     //print_r (json_encode($curl->response));
 
     exit;
@@ -281,7 +282,7 @@ $test->get("start", function () use ($app) {
 
         $target_url = $baseurl . $route;
 
-        $curl->get ($target_url);
+        $curl->get($target_url);
 
         print_r("\nURL = ");
         print_r($target_url);

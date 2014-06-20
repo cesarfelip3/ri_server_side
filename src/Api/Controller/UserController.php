@@ -113,7 +113,7 @@ class UserController extends BaseController
             return $this->setFailed("empty user info list");
         }
 
-        return $this->setSuccess("" . var_export($user_info_list, true));
+        //return $this->setSuccess("" . var_export($user_info_list, true));
 
         $info = array ();
         foreach ($user_info_list as $user_info) {

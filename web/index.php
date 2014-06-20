@@ -192,7 +192,7 @@ $test->get("user/add", function () use ($app, $basename, $api_v1) {
         'fileinfo' => '@' . $file_name_with_full_path
     );
 
-    $target_url = "http://localhost" . $basename . "/" . $api_v1 . "user/add";
+    $target_url = "http://localhost" . $basename . "/" . $api_v1 . "user/push/switch";
     require_once __DIR__ . '/test/Curl.class.php';
 
     $curl = new Curl();

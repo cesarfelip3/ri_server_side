@@ -119,7 +119,7 @@ class UserController extends BaseController
         foreach ($user_info_list as $user_info) {
 
             $user_info["user_uuid"] = $user_uuid;
-            //return $this->setSuccess("", var_export($user_info, true));
+            return $this->setSuccess("", var_export($user_info, true));
 
             if ($user_info["type"] == "todo") {
                 $this->addTodo($user_info);

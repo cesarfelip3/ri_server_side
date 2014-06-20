@@ -207,7 +207,7 @@ $test->get("todo/add", function () use ($app, $basename, $api_v1) {
 
     $file_name_with_full_path = realpath(__DIR__ . "/pi-512.png");
     $post = array(
-        "user_uuid" => "539b933f1d193",
+        "user_uuid" => "53a4555a119a9",
         "name" => "hello",
         "description" => "test push notification message",
         "todo_id" => 2,

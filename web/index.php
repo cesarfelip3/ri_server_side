@@ -209,13 +209,14 @@ $test->get("todo/add", function () use ($app, $basename, $api_v1) {
     $post = array(
         "user_uuid" => "53a4555a119a9",
         "user_info_list" => json_encode(array(
-            "description" => "test push notification message",
-            "todo_id" => 2,
-            "alert_id" => 1,
-            "alarm" => time() - 3600,
-            "latency_start" => time(),
-            "type" => "todo"
-        )),
+            array(
+                "description" => "test push notification message",
+                "todo_id" => 2,
+                "alert_id" => 1,
+                "alarm" => time() - 3600,
+                "latency_start" => time(),
+                "type" => "todo"
+            ))),
     );
 
     if ($app["debug"] == false) {

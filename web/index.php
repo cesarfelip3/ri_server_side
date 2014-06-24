@@ -168,9 +168,34 @@ $api->post("push/apns", function (Request $request) use ($app) {
     return $app->json($controller->getError(), $status);
 });
 
-$api->before(function (Request $request) {
+$api->before(function (Request $request, $app) {
 
-    return null;
+    $token = $request->headers->get("X-Auth-Token");
+    $time = $request->get("ticket", 0);
+
+    $message = "Invalid API request";
+
+    if (empty ($time) || empty ($token)) {
+
+        return $app->json (array ("status"=>"failure", "message"=>$message), 400);
+    }
+
+    if (time () - intval($time) >= 1000) {
+
+        return $app->json (array ("status"=>"failure", "message"=>$message), 400);
+    }
+
+    $API_KEY = "XpHOUhadfhPIUYKHDFxOUYKJHERlkjhadfotYRWEWKEhluyadf";
+    $API_SECRET = "921936776534209348";
+
+    $api_token = hash_hmac ("sha256", $API_KEY . sha1($API_SECRET . $time));
+
+    if (trim($token) == $api_token) {
+
+        return null;
+    }
+
+    return $app->json (array ("status"=>"failure", "message"=>$message), 400);
 });
 
 $app->mount($basename . "/" . $api_v1, $api);
